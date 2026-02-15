@@ -1,0 +1,34 @@
+{
+  "name": "techdocs-generator",
+  "version": "1.0.0",
+  "description": "Multi-agent system for generating technical documentation from repositories and local folders",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/server.js",
+    "serve": "node dist/server.js",
+    "build-and-serve": "npm run build && npm run serve",
+    "clean-build": "npm run clean && npm run build",
+    "clean-and-build-and-serve": "npm run clean && npm run build && npm run serve"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^0.0.66",
+    "@azure/msal-node": "^2.16.3",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "ai": "^4.0.0",
+    "dotenv": "^16.3.0",
+    "fs-extra": "^11.1.1",
+    "nodemailer": "^6.9.0",
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^20.0.0",
+    "@types/nodemailer": "^6.4.14",
+    "http-server": "^14.1.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.0.0"
+  }
+}
