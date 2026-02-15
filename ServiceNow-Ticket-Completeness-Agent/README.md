@@ -16,7 +16,7 @@ Below are screenshots of the input and output files:
 
 | Input Ticket JSON | Input Rules CSV |
 |:----------------:|:--------------:|
-| ![Ticket JSON](images/ServiceNow_Incident_Dump.png) | ![Rules CSV](images/Ticket_Completeness_Rules.PNG) |
+| ![Ticket JSON](images/ServiceNow_Incident_Dump.PNG) | ![Rules CSV](images/Ticket_Completeness_Rules.PNG) |
 
 | Output JSON Report | Output CSV Report |
 |:------------------:|:----------------:|
