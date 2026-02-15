@@ -14,13 +14,18 @@ It produces two outputs:
 
 Below are screenshots of the input and output files:
 
-| Input Ticket JSON | Input Rules CSV |
-|:----------------:|:--------------:|
-| ![Ticket JSON](images/ServiceNow_Incident_Dump.PNG) | ![Rules CSV](images/Ticket_Completeness_Rules.PNG) |
+ ### Input Ticket JSON 
 
-| Output JSON Report | Output CSV Report |
-|:------------------:|:----------------:|
-| ![Output JSON](images/Ticket_Completeness_Analysis_Output_json.PNG) | ![Output CSV](images/Ticket_Completeness_Analysis_Output_csv.PNG) |
+![Ticket JSON](images/ServiceNow_Incident_Dump.PNG) 
+
+ ### Input Rules CSV
+![Rules CSV](images/Ticket_Completeness_Rules.PNG)
+
+ ### Output JSON Report
+![Output JSON](images/Ticket_Completeness_Analysis_Output_json.PNG) 
+
+ ### Output CSV Report
+![Output CSV](images/Ticket_Completeness_Analysis_Output_csv.PNG)
 
 These images show the expected formats for the input and output files. The agent reads the ticket and rules files, analyzes each ticket for completeness, and writes the results to both JSON and CSV files.
 
