@@ -1,0 +1,4 @@
+# Core dependencies for the ServiceNow ticket completeness agent
+
+# For LLM call (working solution)
+httpx>=0.25.0  # Async HTTP client for API requests

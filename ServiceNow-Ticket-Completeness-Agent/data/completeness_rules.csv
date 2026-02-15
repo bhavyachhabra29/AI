@@ -1,0 +1,11 @@
+Incident must have short_description and description
+Incident must include assignment_group or assigned_to
+Incident must include u_site_url
+Incident must include u_business_justification
+Access requests must include u_requested_access and u_business_justification
+All requests must include u_site_url
+All requests must include approval status (approval field not empty)
+Requests for Site Creation must include u_request_type and u_business_justification
+Requests for Custom Functionality must include u_business_justification and sc_items details
+All tickets must include priority
+All tickets must include category and subcategory
