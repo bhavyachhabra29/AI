@@ -1,0 +1,34 @@
+{
+  "use_cases": [
+    {
+      "id": "wikipedia-homepage",
+      "name": "Wikipedia Homepage Exploration",
+      "steps": [
+        {
+          "step": 1,
+          "description": "Go to https://www.wikipedia.com"
+        },
+        {
+          "step": 2,
+          "description": "Extract the count and names of languages mentioned on the page like English, Francais etc."
+        },
+        {
+          "step": 3,
+          "description": "Click on link with the class: 'link-box' and title: 'English \u2014 Wikipedia \u2014 The Free Encyclopedia'"
+        },
+        {
+          "step": 4,
+          "description": "Wait for the page to load"
+        },
+        {
+          "step": 5,
+          "description": "Check if sections with the title - From today's featured article and In the news are there on the page."
+        },
+        {
+          "step": 6,
+          "description": "Summarize the content in the section From today's featured article in bullet points."
+        }
+      ]
+    }
+  ]
+}

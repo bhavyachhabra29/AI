@@ -1,0 +1,28 @@
+{
+  "instructions": [
+    {
+      "step": 1,
+      "description": "Go to https://www.wikipedia.com"
+    },
+    {
+      "step": 2,
+      "description": "Extract the count and names of languages mentioned on the page like English, Francais etc."
+    },
+    {
+      "step": 3,
+      "description": "Click on link with the class: \u0027link-box\u0027 and title: \u0027English \u2014 Wikipedia \u2014 The Free Encyclopedia\u0027"
+    },
+    {
+      "step": 4,
+      "description": "Wait for the page to load"
+    },
+    {
+      "step": 5,
+      "description": "Check if sections with the title - From today\u0027s featured article and In the news are there on the page."
+    },
+    {
+      "step": 6,
+      "description": "Summarize the content in the section From today\u0027s featured article in bullet points."
+    }
+  ]
+}
