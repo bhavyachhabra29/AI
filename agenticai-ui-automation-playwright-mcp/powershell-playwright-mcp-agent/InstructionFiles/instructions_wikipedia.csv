@@ -1,0 +1,7 @@
+Use Case ID,Use Case Name,Use Case Description,Step ID,Step Description
+wikipedia-homepage,Wikipedia Homepage,Validate the Wikipedia landing page and key content,1,Go to https://www.wikipedia.com
+wikipedia-homepage,Wikipedia Homepage,Validate the Wikipedia landing page and key content,2,Extract the count and names of languages mentioned on the page like English, Francais etc.
+wikipedia-homepage,Wikipedia Homepage,Validate the Wikipedia landing page and key content,3,Click on link with the class: 'link-box' and title: 'English - Wikipedia - The Free Encyclopedia'
+wikipedia-homepage,Wikipedia Homepage,Validate the Wikipedia landing page and key content,4,Wait for the page to load
+wikipedia-homepage,Wikipedia Homepage,Validate the Wikipedia landing page and key content,5,Check if sections with the title - From today's featured article and In the news are there on the page.
+wikipedia-homepage,Wikipedia Homepage,Validate the Wikipedia landing page and key content,6,Summarize the content in the section From today's featured article in bullet points.

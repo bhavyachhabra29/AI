@@ -40,3 +40,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# PowerShell Playwright MCP agent — local config with secrets + generated reports
+powershell-playwright-mcp-agent/agent-config.psd1
+powershell-playwright-mcp-agent/Reports/
+powershell-playwright-mcp-agent/.playwright-mcp/
+# Local npm artifacts created by the agent's auto-install (Ensure-PlaywrightBrowserInstalled)
+powershell-playwright-mcp-agent/node_modules/
+powershell-playwright-mcp-agent/package.json
+powershell-playwright-mcp-agent/package-lock.json

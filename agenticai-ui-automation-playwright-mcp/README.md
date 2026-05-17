@@ -199,6 +199,41 @@ This app is designed for deployment as an Azure Web App:
 3. Deploy using Azure CLI, GitHub Actions, or VS Code Azure extension
 4. Ensure Playwright browsers are installed (add `npx playwright install chromium --with-deps` to startup script)
 
+## PowerShell + Playwright MCP companion agent
+
+The repo also includes a fully standalone PowerShell-based agent under
+[`powershell-playwright-mcp-agent/`](powershell-playwright-mcp-agent/). It is independent of the Next.js web app and is
+useful when you want to run the same kind of UI automation locally from a script — no server, no UI — driven entirely
+by a CSV file of test steps.
+
+### What it does
+
+- Reads test steps from one or more CSV files (columns: `Use Case ID`, `Use Case Name`, `Use Case Description`, `Step ID`, `Step Description`).
+- Starts [`@playwright/mcp`](https://github.com/microsoft/playwright-mcp) as a stdio subprocess.
+- Calls OpenAI / Azure OpenAI `chat/completions` and routes the model's tool calls to the Playwright MCP server.
+- Captures a screenshot after every browser action and writes a self-contained HTML report under `powershell-playwright-mcp-agent/Reports/run-<timestamp>/`.
+
+### Quick start
+
+```powershell
+cd powershell-playwright-mcp-agent
+
+# Create your local config from the checked-in template (agent-config.psd1 is git-ignored)
+Copy-Item .\agent-config.example.psd1 .\agent-config.psd1
+
+# Edit agent-config.psd1 and set ApiKey (or leave empty to use the OPENAI_API_KEY env var)
+notepad .\agent-config.psd1
+
+# Run with the bundled example instructions
+.\Invoke-PlaywrightMcpAgent.ps1 -InstructionsFolder .\InstructionFiles
+```
+
+Or just double-click `run-agent.bat`. Node.js, `@playwright/test`, and the configured browser binaries are
+auto-installed on first run.
+
+See [`powershell-playwright-mcp-agent/README.md`](powershell-playwright-mcp-agent/README.md) for the full CSV format,
+configuration reference, and troubleshooting notes.
+
 ## Tech Stack
 
 - **Next.js 16** — React framework with App Router
