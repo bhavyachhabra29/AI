@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TripConcierge.Shared\TripConcierge.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.Projects" Version="2.1.0-beta.3" />
+    <PackageReference Include="Microsoft.Agents.AI.Foundry.Hosting" Version="1.11.1-preview.260625.1" />
+    <!-- Pinned explicitly: this transitive dependency of Microsoft.Agents.AI.Foundry.Hosting
+         resolves fine on Windows restores but goes missing during Linux container builds
+         (NETSDK1064 at publish time) unless referenced directly. -->
+    <PackageReference Include="ModelContextProtocol.Core" Version="1.2.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

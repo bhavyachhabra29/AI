@@ -1,0 +1,59 @@
+@page "/sequential"
+@rendermode InteractiveServer
+@inject SequentialRunner Runner
+
+<PageTitle>Sequential - Trip Planning Pipeline</PageTitle>
+
+<div class="tc-card tc-pattern-header">
+    <h1>➡️ Sequential &mdash; Trip Planning Pipeline</h1>
+    <p>PreferenceIntake → Flights → Hotels → Activities → ItineraryWriter. Each agent builds on the previous agent's output.</p>
+</div>
+
+<div class="tc-card">
+    <div class="tc-input-row">
+        <textarea rows="2" @bind="_tripBrief" disabled="@_running"
+                   placeholder="Describe your trip, e.g. 'A 4-day trip to Tokyo for two food lovers in October, mid-range budget.'"></textarea>
+        <button class="tc-btn" disabled="@_running" @onclick="RunAsync">@(_running ? "Planning…" : "Plan Trip")</button>
+    </div>
+</div>
+
+@if (_errorMessage is not null)
+{
+    <div class="tc-error-banner">⚠️ @_errorMessage</div>
+}
+
+@if (_feed.Entries.Count > 0)
+{
+    <div class="tc-card">
+        <ActivityFeedView Entries="_feed.Entries" />
+    </div>
+}
+
+@code {
+    private string _tripBrief = "A 4-day trip to Tokyo for two food lovers in October, mid-range budget.";
+    private bool _running;
+    private string? _errorMessage;
+    private ActivityFeedBuilder _feed = new();
+
+    private async Task RunAsync()
+    {
+        _running = true;
+        _errorMessage = null;
+        _feed = new ActivityFeedBuilder();
+        StateHasChanged();
+
+        try
+        {
+            await Runner.RunAsync(_tripBrief, _feed, () => InvokeAsync(StateHasChanged));
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.ToString();
+        }
+        finally
+        {
+            _running = false;
+            StateHasChanged();
+        }
+    }
+}

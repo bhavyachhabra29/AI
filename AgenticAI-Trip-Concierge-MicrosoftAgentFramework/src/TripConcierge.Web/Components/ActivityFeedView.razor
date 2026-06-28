@@ -1,0 +1,56 @@
+<div class="tc-feed">
+    @foreach (var entry in Entries)
+    {
+        <div class="tc-entry @CssClassFor(entry)">
+            <div class="tc-entry-head">
+                <AgentBadge Name="@entry.AgentName" />
+                @if (entry.ToolName is not null)
+                {
+                    <span class="tc-timestamp">@entry.ToolName</span>
+                }
+                <span class="tc-timestamp">@entry.Timestamp.ToString("HH:mm:ss")</span>
+            </div>
+            <div class="tc-entry-text">@entry.Text</div>
+
+            @if (entry.Type == ActivityEventType.ApprovalRequired)
+            {
+                @if (entry.ApprovalResolved)
+                {
+                    <div class="tc-approval-decided">@(entry.ApprovalApproved ? "✅ Approved" : "❌ Rejected")</div>
+                }
+                else
+                {
+                    <div class="tc-approval-actions">
+                        <button class="tc-btn tc-btn-approve" @onclick="() => Decide(entry, true)">Approve</button>
+                        <button class="tc-btn tc-btn-reject" @onclick="() => Decide(entry, false)">Reject</button>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public List<ActivityFeedEntry> Entries { get; set; } = [];
+
+    private async Task Decide(ActivityFeedEntry entry, bool approved)
+    {
+        entry.ApprovalResolved = true;
+        entry.ApprovalApproved = approved;
+
+        if (entry.OnApprovalDecision is not null)
+        {
+            await entry.OnApprovalDecision(approved);
+        }
+    }
+
+    private static string CssClassFor(ActivityFeedEntry entry) => entry.Type switch
+    {
+        ActivityEventType.ToolCall or ActivityEventType.ToolResult => "tc-entry-tool",
+        ActivityEventType.Handoff => "tc-entry-handoff",
+        ActivityEventType.FinalResult => "tc-entry-final",
+        ActivityEventType.ApprovalRequired => "tc-entry-approval",
+        _ => ""
+    };
+}

@@ -1,0 +1,12 @@
+<span class="tc-badge" style="background-color:@BackgroundColor()">@Name</span>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = "";
+
+    private string BackgroundColor()
+    {
+        var hue = Math.Abs(Name.GetHashCode()) % 360;
+        return $"hsl({hue}, 65%, 65%)";
+    }
+}

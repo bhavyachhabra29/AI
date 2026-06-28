@@ -1,0 +1,63 @@
+@page "/groupchat"
+@rendermode InteractiveServer
+@inject GroupChatRunner Runner
+
+<PageTitle>GroupChat - Budget vs Experience Negotiation</PageTitle>
+
+<div class="tc-card tc-pattern-header">
+    <h1>💬 GroupChat &mdash; Budget vs Experience Negotiation</h1>
+    <p>A Budget advocate and an Experience advocate debate a draft itinerary over multiple rounds until they reach consensus or hit the round limit.</p>
+</div>
+
+<div class="tc-card">
+    <div class="tc-input-row">
+        <textarea rows="4" @bind="_draftItinerary" disabled="@_running"></textarea>
+        <button class="tc-btn" disabled="@_running" @onclick="RunAsync">@(_running ? "Debating…" : "Start Debate")</button>
+    </div>
+</div>
+
+@if (_errorMessage is not null)
+{
+    <div class="tc-error-banner">⚠️ @_errorMessage</div>
+}
+
+@if (_feed.Entries.Count > 0)
+{
+    <div class="tc-card">
+        <ActivityFeedView Entries="_feed.Entries" />
+    </div>
+}
+
+@code {
+    private string _draftItinerary =
+        "Day 1: Arrive Tokyo, 5-star hotel near Shibuya, private sushi omakase dinner ($250/person).\n" +
+        "Day 2: Guided tour of Tsukiji and Asakusa with a private guide ($400/group).\n" +
+        "Day 3: Day trip to Hakone with a chartered car ($350/group).\n" +
+        "Day 4: Shopping and departure.";
+
+    private bool _running;
+    private string? _errorMessage;
+    private ActivityFeedBuilder _feed = new();
+
+    private async Task RunAsync()
+    {
+        _running = true;
+        _errorMessage = null;
+        _feed = new ActivityFeedBuilder();
+        StateHasChanged();
+
+        try
+        {
+            await Runner.RunAsync(_draftItinerary, _feed, () => InvokeAsync(StateHasChanged));
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.ToString();
+        }
+        finally
+        {
+            _running = false;
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,32 @@
+@page "/"
+
+<PageTitle>Trip Concierge - Overview</PageTitle>
+
+<div class="tc-card">
+    <h1>🧳 Trip Planning Concierge</h1>
+    <p>
+        A demo of the four built-in multi-agent orchestration patterns in the
+        <strong>Microsoft Agent Framework SDK</strong> (C#), all wired around one travel-planning scenario.
+    </p>
+</div>
+
+<div class="tc-card">
+    <h2>The story</h2>
+    <ol>
+        <li><strong>Sequential</strong> &mdash; plan a trip end-to-end through a pipeline of specialist agents.</li>
+        <li><strong>Concurrent</strong> &mdash; research the same trip from four angles in parallel.</li>
+        <li><strong>GroupChat</strong> &mdash; watch two advisors debate trade-offs on a draft itinerary.</li>
+        <li><strong>Handoff</strong> &mdash; chat with a concierge bot that hands off to booking specialists. This one is also deployed live to <strong>Azure AI Foundry</strong>.</li>
+    </ol>
+    <p>Every page shows a live activity feed of which agent is talking, which tool it's calling, and when control hands off between agents.</p>
+</div>
+
+<div class="tc-card">
+    <h2>Data sources</h2>
+    <ul>
+        <li>🌦️ Weather &mdash; live, free, no-key <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> API.</li>
+        <li>🏨 Hotels &amp; 🎟️ Activities &mdash; real venues from <a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a> (Overpass API), no key required.</li>
+        <li>✈️ Flights &mdash; Azure AI Foundry's built-in <code>HostedWebSearchTool</code> (live web search, no separate Bing resource to provision).</li>
+        <li>🧾 Bookings &mdash; simulated, gated behind human-in-the-loop approval.</li>
+    </ul>
+</div>

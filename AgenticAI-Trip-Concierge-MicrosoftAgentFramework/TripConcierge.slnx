@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TripConcierge.HostedConcierge/TripConcierge.HostedConcierge.csproj" />
+    <Project Path="src/TripConcierge.Shared/TripConcierge.Shared.csproj" />
+    <Project Path="src/TripConcierge.Web/TripConcierge.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TripConcierge.Shared.Tests/TripConcierge.Shared.Tests.csproj" />
+  </Folder>
+</Solution>
