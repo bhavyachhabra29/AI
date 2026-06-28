@@ -1,0 +1,59 @@
+@page "/concurrent"
+@rendermode InteractiveServer
+@inject ConcurrentRunner Runner
+
+<PageTitle>Concurrent - Multi-Perspective Destination Research</PageTitle>
+
+<div class="tc-card tc-pattern-header">
+    <h1>⏩ Concurrent &mdash; Multi-Perspective Destination Research</h1>
+    <p>Flights, Hotels, Activities, and Weather agents all research the same trip brief independently and in parallel, then a follow-up call consolidates their findings.</p>
+</div>
+
+<div class="tc-card">
+    <div class="tc-input-row">
+        <textarea rows="2" @bind="_tripBrief" disabled="@_running"
+                   placeholder="Describe your trip, e.g. 'A long weekend in Paris in spring, interested in art and food.'"></textarea>
+        <button class="tc-btn" disabled="@_running" @onclick="RunAsync">@(_running ? "Researching…" : "Research Trip")</button>
+    </div>
+</div>
+
+@if (_errorMessage is not null)
+{
+    <div class="tc-error-banner">⚠️ @_errorMessage</div>
+}
+
+@if (_feed.Entries.Count > 0)
+{
+    <div class="tc-card">
+        <ActivityFeedView Entries="_feed.Entries" />
+    </div>
+}
+
+@code {
+    private string _tripBrief = "A long weekend in Paris in spring, interested in art and food.";
+    private bool _running;
+    private string? _errorMessage;
+    private ActivityFeedBuilder _feed = new();
+
+    private async Task RunAsync()
+    {
+        _running = true;
+        _errorMessage = null;
+        _feed = new ActivityFeedBuilder();
+        StateHasChanged();
+
+        try
+        {
+            await Runner.RunAsync(_tripBrief, _feed, () => InvokeAsync(StateHasChanged));
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.ToString();
+        }
+        finally
+        {
+            _running = false;
+            StateHasChanged();
+        }
+    }
+}

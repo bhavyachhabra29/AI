@@ -1,0 +1,94 @@
+@page "/handoff"
+@rendermode InteractiveServer
+@inject HandoffRunner Runner
+@inject FoundryHostedAgentClient HostedClient
+@using Microsoft.AspNetCore.Components.Web
+
+<PageTitle>Handoff - Trip Concierge Chatbot</PageTitle>
+
+<div class="tc-card tc-pattern-header">
+    <h1>🤝 Handoff &mdash; Trip Concierge Chatbot</h1>
+    <p>Chat with the concierge. It hands off to flight/hotel/activity specialists based on what you ask, and booking actions need your approval.</p>
+</div>
+
+<div class="tc-card">
+    <div class="tc-toggle">
+        <input type="checkbox" id="liveToggle" @bind="_useLiveAgent" disabled="@(!HostedClient.IsConfigured)" />
+        <label for="liveToggle">
+            Call the live Azure AI Foundry hosted agent instead of running in-process
+            @if (!HostedClient.IsConfigured)
+            {
+                <em>&nbsp;(not deployed yet &mdash; see README "Azure Deployment")</em>
+            }
+        </label>
+    </div>
+
+    <div class="tc-input-row">
+        <input type="text" @bind="_userInput" @bind:event="oninput" disabled="@_sending"
+               @onkeydown="OnKeyDownAsync" placeholder="e.g. 'I want to book a flight to Paris'" />
+        <button class="tc-btn" disabled="@_sending" @onclick="SendAsync">@(_sending ? "Sending…" : "Send")</button>
+    </div>
+</div>
+
+@if (_errorMessage is not null)
+{
+    <div class="tc-error-banner">⚠️ @_errorMessage</div>
+}
+
+<div class="tc-card">
+    <ActivityFeedView Entries="_feed.Entries" />
+</div>
+
+@code {
+    private string _userInput = "";
+    private bool _sending;
+    private bool _useLiveAgent;
+    private string? _errorMessage;
+    private readonly ActivityFeedBuilder _feed = new();
+
+    private async Task OnKeyDownAsync(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !_sending && !string.IsNullOrWhiteSpace(_userInput))
+        {
+            await SendAsync();
+        }
+    }
+
+    private async Task SendAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_userInput))
+        {
+            return;
+        }
+
+        var text = _userInput;
+        _userInput = "";
+        _sending = true;
+        _errorMessage = null;
+
+        _feed.Entries.Add(new ActivityFeedEntry { Type = ActivityEventType.AgentMessage, AgentName = "You", Text = text });
+        StateHasChanged();
+
+        try
+        {
+            if (_useLiveAgent && HostedClient.IsConfigured)
+            {
+                var reply = await HostedClient.SendAsync(text);
+                _feed.Entries.Add(new ActivityFeedEntry { Type = ActivityEventType.AgentMessage, AgentName = "trip-concierge (hosted)", Text = reply });
+            }
+            else
+            {
+                await Runner.SendUserMessageAsync(text, _feed, () => InvokeAsync(StateHasChanged));
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.ToString();
+        }
+        finally
+        {
+            _sending = false;
+            StateHasChanged();
+        }
+    }
+}

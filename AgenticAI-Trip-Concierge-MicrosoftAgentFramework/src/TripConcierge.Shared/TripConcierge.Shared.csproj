@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- AsIChatClient / Agent Framework workflow APIs are intentionally-used preview surfaces. -->
+    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="TripConcierge.Shared.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.Projects" Version="2.1.0-beta.3" />
+    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+    <PackageReference Include="DotNetEnv" Version="3.2.0" />
+    <PackageReference Include="Microsoft.Agents.AI" Version="1.11.1" />
+    <PackageReference Include="Microsoft.Agents.AI.Foundry" Version="1.11.1-preview.260625.1" />
+    <PackageReference Include="Microsoft.Agents.AI.Workflows" Version="1.11.1" />
+  </ItemGroup>
+
+</Project>
